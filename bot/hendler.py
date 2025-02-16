@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram import types
 from aiogram.types import Message
 from keyboards import *
-from api_bot import get_recipe_by_id_api
+from api_bot import get_recipe_by_id_api,get_random_word_api,get_word_by_id_api
 from api_bot import get_recipes_api, add_recipes_api, get_count_recipes_api
 from states import RecipeCreateStates
 from aiogram.fsm.context import FSMContext
@@ -336,5 +336,44 @@ async def paginate_handler(callback: types.CallbackQuery, session :aiohttp.Clien
         )
         logging.info(f"Помилка при відправки фото {e}")
     
+    await callback.answer()
+    
+# ////////////////////////////////// english
+@router.callback_query(F.data == "get_english")
+async def get_recipes_handler(callback: types.CallbackQuery):
+    await callback.message.answer("Обери дію", reply_markup=english_menu())    
+    await callback.answer()
+
+@router.callback_query(F.data.startswith("get_word_in_"))
+async def get_rundom_word_handler(callback: types.CallbackQuery, session :aiohttp.ClientSession):
+    data_split = (callback.data.split("_"))
+
+    lang = data_split[3]
+    
+    if len(data_split) >= 5:
+        flag_show_means = True
+    else:
+        flag_show_means = False
+
+
+    if len(data_split) == 6:
+        vacab_id = data_split[5]
+        word = await get_word_by_id_api(session,vacab_id)
+    
+    else:
+        word = await get_random_word_api(session)
+
+    
+    # await callback.message.edit_text("Обери дію", reply_markup=get_word_menu_keyboard(word=word,lang=lang,flag_show_means=flag_show_means))    
+    keybord,text = get_word_menu_keyboard(word=word,lang=lang,flag_show_means=flag_show_means)
+    if not text:
+        text = "Перекладіть"
+    # await callback.message.answer(f" {text}", reply_markup=keybord) 
+    current_text = callback.message.text  # Отримуємо поточний текст повідомлення
+    text_new = f"{text}"
+    logging.info(text_new)
+    logging.info(current_text)
+    if current_text != f"{text}" or current_text =="Перекладіть":
+        await callback.message.edit_text(f" {text}", reply_markup=keybord)    
     await callback.answer()
     

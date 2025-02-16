@@ -4,10 +4,13 @@ from models import Recipe
 from typing import List
 from routes import router
 from fastapi.staticfiles import StaticFiles
+import logging
+import subprocess
 app = FastAPI()
 
 # app.mount("/media", StaticFiles(directory=UPLOAD_DIR), name="media")
 app.include_router(router)
+
 
 # @app.get('/recipes/', response_model=List[Recipe])
 # async def read_root():

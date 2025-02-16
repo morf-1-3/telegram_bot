@@ -42,8 +42,24 @@ class RecipeCreate(BaseModel):
     # image_name: str
     # is_active: bool
 
+# ////////////////////////// english ////////////////////
+
+class Vocabulary(BaseModel):
+    name_end: str
+    name_ukr: str
+
+    class Config:
+        json_encoders = {
+            ObjectId: str
+        }
+
+class VocabularyCreate(BaseModel):
+    name_end: str
+    name_ukr: str
 
 
+
+# ////////////////////////////////////////
 
     
 

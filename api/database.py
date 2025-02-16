@@ -9,3 +9,4 @@ db = client["my_database"]
 collection = db["recipes"]
 # collection.insert_one({"name": "John", "ingradients": ["ss","aa"],"instructions": "ssssss"})
 
+collection_vocabulary = db["vocabulary"]

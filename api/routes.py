@@ -3,7 +3,7 @@ from fastapi.responses import FileResponse
 import aiofiles
 import logging
 from services import *
-from models import Recipe
+from models import Recipe, Vocabulary,VocabularyCreate
 import os
 from fastapi import Query
 
@@ -67,3 +67,17 @@ async def add_recipe(recipe_data: RecipeCreate):
 @router.get('/get_count/')
 async def get_count():
     return await get_count_documents()
+
+
+@router.get('/vocabulary/')
+async def get_pair_in_vocabulary():
+    return await get_random_pair_in_vocabulary()
+
+@router.post('/vocabulary/')
+async def create_vocabulary_route(vocabulary_data:VocabularyCreate):
+    new_vocabulary_id = await create_vocabulary(vocabulary_data)
+    return({"new_vocabulary_id": new_vocabulary_id})
+
+@router.get('/vocabulary/{vocabulary_id}')
+async def show_vocabulary_by_id(vocabulary_id:str):
+    return await get_vocabulary_by_id(vocabulary_id)

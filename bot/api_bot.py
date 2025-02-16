@@ -43,3 +43,23 @@ async def get_recipe_by_id_api(session:aiohttp.ClientSession,recipe_id, URL_END=
             return await response.json()  # Парсимо JSON
         else:
             return None
+        
+
+async def get_random_word_api(session:aiohttp.ClientSession, URL_END="/vocabulary/"):
+    request_url = API_URL + URL_END 
+    async with session.get(request_url) as response:
+        if response.status == 200:
+            logging.info(f"🔹 ClientSession ID: {id(session)}")
+            return await response.json()  # Парсимо JSON
+        else:
+            return None
+        
+
+async def get_word_by_id_api(session:aiohttp.ClientSession,recipe_id, URL_END="/vocabulary/"):
+    request_url = API_URL + URL_END + recipe_id
+    async with session.get(request_url) as response:
+        if response.status == 200:
+            logging.info(f"🔹 ClientSession ID: {id(session)}")
+            return await response.json()  # Парсимо JSON
+        else:
+            return None

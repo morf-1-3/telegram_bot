@@ -9,6 +9,7 @@ def main_menu():
     keyboard = [
         [InlineKeyboardButton(text="➕ Додати свій рецепт", callback_data="add_recipe")],
         [InlineKeyboardButton(text="📖 Переглянути рецепти", callback_data="get_recipes")],
+        [InlineKeyboardButton(text="📚 Вчити англійську", callback_data="get_english")],
         
         # [InlineKeyboardButton(text="❓ Допомога", callback_data="help")],
         # [InlineKeyboardButton(text="📞 Контакти", callback_data="contacts")],
@@ -106,3 +107,32 @@ def get_recipe_keyboard(recipes,page,total_pages):
     keyboard.append(pagination_buttons)
 
     return InlineKeyboardMarkup(inline_keyboard=keyboard)
+
+
+
+# /////////////english///////////////////
+def english_menu():
+    keyboard = [
+        [InlineKeyboardButton(text="🇺🇸 Перекладати з англійської", callback_data="get_word_in_english")],
+        [InlineKeyboardButton(text=" 🇺🇦 Перекладати з української", callback_data="get_word_in_ukrainian")],        
+          ]
+    return InlineKeyboardMarkup(inline_keyboard=keyboard)
+
+
+def get_word_menu_keyboard(word,lang,flag_show_means):
+    keyboard = []
+    text = ""
+    if lang == "english":
+        keyboard.append([InlineKeyboardButton(text=word["name_end"], callback_data=f"get_word_in_{lang}_showmeand_{word["_id"]}")])
+        if flag_show_means:
+            # keyboard.append([InlineKeyboardButton(text=word["name_ukr"], callback_data=f"calback_data")])
+            text = word["name_ukr"]
+
+    if lang == "ukrainian":
+        keyboard.append([InlineKeyboardButton(text=word["name_ukr"], callback_data=f"get_word_in_{lang}_showmeand_{word["_id"]}")])
+        if flag_show_means:
+            # keyboard.append([InlineKeyboardButton(text=word["name_end"], callback_data=f"calback_data")])
+            text = word["name_end"]
+    keyboard.append([InlineKeyboardButton(text="➡️ Наступне слово", callback_data=f"get_word_in_{lang}")])    
+    return InlineKeyboardMarkup(inline_keyboard=keyboard),text
+

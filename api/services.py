@@ -1,11 +1,13 @@
-from database import collection
+from database import collection, collection_vocabulary
 from models import Recipe, RecipeCreate, RecipeUpdate
+from models import Vocabulary, VocabularyCreate
 from bson import ObjectId
 import os
 from datetime import datetime
 from fastapi import APIRouter,File,UploadFile ,HTTPException
 from fastapi.responses import FileResponse
 import aiofiles
+import random
 
 
 async def get_recipes(page, limit):
@@ -90,3 +92,32 @@ async def create_recipe(recipe_data: RecipeCreate) -> str:
 
 async def get_count_documents():
     return {"count" : await collection.count_documents({})}
+
+# //////////////// english ////////////////////
+async def get_count_vocabulary():
+    return {"count" : await collection_vocabulary.count_documents({})}
+
+
+async def create_vocabulary(vocabulary_data: VocabularyCreate) -> str:
+    vocabulary_dict = vocabulary_data.model_dump()
+    new_vocabulary = await collection_vocabulary.insert_one(vocabulary_dict)
+    return str(new_vocabulary.inserted_id)
+
+async def serialize_vocabulary(vocabulary: Vocabulary):
+    vocabulary["_id"] = str(vocabulary["_id"])
+    return vocabulary
+
+
+async def get_random_pair_in_vocabulary():
+    count = await collection_vocabulary.count_documents({})
+    if count == 0:
+        return None  # Якщо колекція порожня, повертаємо None
+    
+    random_index = random.randint(0, count - 1)  # Випадковий індекс
+    random_doc = await collection_vocabulary.find().skip(random_index).limit(1).to_list(length=1)
+    
+    return await serialize_vocabulary(random_doc[0]) if random_doc else None
+
+async def get_vocabulary_by_id(id:str):
+    vocabulary = await collection_vocabulary.find_one({"_id": ObjectId(id)})
+    return await serialize_vocabulary(vocabulary)
