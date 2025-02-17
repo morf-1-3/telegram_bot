@@ -32,7 +32,7 @@ def start_menu():
 
 async def set_bot_commands(bot: Bot):
     commands = [
-        BotCommand(command="start", description="Запустити бота"),
+        # BotCommand(command="start", description="Запустити бота"),
         
         BotCommand(command="menu", description="Відкрити меню"),
         BotCommand(command="help", description="Допомога"),
