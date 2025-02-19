@@ -2,7 +2,7 @@ import aiohttp
 import logging
 
 # API_URL = "http://localhost:8000"
-API_URL = "https://telegrambot-production-2bd0.up.railway.app/"
+API_URL = "https://telegrambot-production-2bd0.up.railway.app"
 
 
 
