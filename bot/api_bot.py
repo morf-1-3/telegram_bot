@@ -2,6 +2,8 @@ import aiohttp
 import logging
 
 API_URL = "http://localhost:8000"
+# API_URL = "http://host.docker.internal:8000"
+
 
 
 async def get_recipes_api(session:aiohttp.ClientSession,limit:int, page:int, URL_END="/recipes/"):

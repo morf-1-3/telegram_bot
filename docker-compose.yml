@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    command: sh -c "cd api && uvicorn main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - bot
+    networks:
+      - my_network
+
+  bot:
+    build: .
+    command: python bot/bot.py
+    env_file:
+      - bot/.env
+    networks:
+      - my_network
+    
+networks:
+  my_network:

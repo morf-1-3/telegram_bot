@@ -1,4 +1,8 @@
 from fastapi import FastAPI
+import os
+import sys
+# from database import collection
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from database import collection
 from models import Recipe
 from typing import List
