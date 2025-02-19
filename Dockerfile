@@ -16,4 +16,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 ENV PYTHONUNBUFFERED=1
 
 # Запуск контейнера
-CMD ["sh", "-c", "python bot/bot.py && cd api && uvicorn main:app --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "cd api && uvicorn main:app --host 0.0.0.0 --port 8000 && python bot/bot.py"]
