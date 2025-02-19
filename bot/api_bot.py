@@ -1,8 +1,8 @@
 import aiohttp
 import logging
 
-API_URL = "http://localhost:8000"
-# API_URL = "http://host.docker.internal:8000"
+# API_URL = "http://localhost:8000"
+API_URL = "https://telegrambot-production-2bd0.up.railway.app/"
 
 
 
