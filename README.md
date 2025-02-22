@@ -1,6 +1,7 @@
 # Async Telegram Bot with FastAPI and MongoDB
 
 This project is a fully asynchronous Telegram bot designed for managing recipes and learning English words. It supports CRUD operations for both recipes and words, making it ideal for personal use. The project includes a FastAPI-based API for communication with a MongoDB database and is containerized with Docker for easy deployment.
+You can use the bot in Telegram: @So_tasty_recipes_bot.
 
 ## Features
 - Asynchronous Telegram bot
